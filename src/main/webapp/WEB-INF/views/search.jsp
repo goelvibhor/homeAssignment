@@ -21,9 +21,9 @@
             }
 
             var index = document.forms["search-form"]["Index"].value;
-            var url = "/search";
+            var url = "/kredx/search";
             if(index.trim() === "baseline"){
-                url = "/search-baseline"
+                url = "/kredx/search-baseline"
             }
 
             if(queryTerms.length > 0){

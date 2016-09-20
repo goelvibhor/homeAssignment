@@ -62,8 +62,8 @@ public abstract class IndexAbstract {
             input = input.replaceAll("[^$A-Za-z0-9 ]", "");
             Stemmer stemmer = new Stemmer();
             for (String word : input.split(" ")) {
-                String tmp = word.toLowerCase();
-                tmp = tmp.replaceAll("^[^$a-z0-9\\s]+|[^a-z0-9\\s]+$", "");
+                String tmp = word.toLowerCase().trim();
+//                tmp = tmp.replaceAll("^[^$a-z0-9\\s]+|[^a-z0-9\\s]+$", "");
                 stemmer.add(tmp.toCharArray(), tmp.length());
                 stemmer.stem();
                 tmp = stemmer.toString();
@@ -82,6 +82,7 @@ public abstract class IndexAbstract {
         Random random = new Random();
         random.setSeed(System.currentTimeMillis());
 //        random.setSeed(12345);
+        String lastId = "";
         try {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -124,8 +125,9 @@ public abstract class IndexAbstract {
                     line = line.replaceFirst("review/text:", "");
                     document.text = line.trim();
                 } else if (line.trim().length() == 0) {
-                    if (random.nextInt(randLimit) == 0) {
+                    if (random.nextInt(randLimit) == 0 && !document.toString().equals(lastId) && documents.size() < indexSize) {
                         documents.add(document);
+                        lastId = document.toString();
                     }
 
                     wordList = getStemmedWords(document.summary, wordList);
