@@ -35,12 +35,10 @@
                         var json = JSON.parse(xhr.responseText);
                         var str = JSON.stringify(json, undefined, 4);
                         var printStr = syntaxHighlight(str);
-                        var elem = document.createElement('pre').innerHTML = printStr;
 
-                        $(".search-result").empty();
-
-                        $(".search-result").append("<h4> Search Results </h4>");
-                        $(".search-result").append(elem);
+                        $("#result-title").show();
+                        $("#results").show();
+                        $("#results").html(printStr);
                     }
                 }
 
@@ -67,6 +65,8 @@
                 return '<span class="' + cls + '">' + match + '</span>';
             });
         }
+
+
 
     </script>
     <style>
@@ -102,9 +102,15 @@
         </form>
     </div>
     <div class="search-result" id="search-result">
-
+        <h4 id="result-title"> Search Results </h4>
+        <pre id="results"></pre>
     </div>
 </div>
 
+<script>
+    $("#result-title").hide();
+    $("#results").hide();
+
+</script>
 </body>
 </html>
